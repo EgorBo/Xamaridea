@@ -10,6 +10,8 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
     /// </summary>
     public partial class ConfigurationDialog : DialogWindow
     {
+        private readonly AndroidProjectTemplateManager _androidProjectTemplateManager = new AndroidProjectTemplateManager();
+
         public ConfigurationDialog(string helpTopic) : base(helpTopic)
         {
             InitializeComponent();
@@ -24,6 +26,7 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
+            _androidProjectTemplateManager.ExtractTemplateIfNotExtracted();
             BrowseTextBox.Text = Settings.Default.AnidePath;
             if (string.IsNullOrWhiteSpace(BrowseTextBox.Text))
             {
@@ -63,6 +66,16 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
         private void UpdateOkButtonState()
         {
             OkButton.IsEnabled = !string.IsNullOrEmpty(BrowseTextBox.Text);
+        }
+
+        private void OnOpenAndroidTemplateDirectory(object sender, RoutedEventArgs e)
+        {
+            _androidProjectTemplateManager.OpenTempateFolder();
+        }
+
+        private void OnResetTemplateToDefault(object sender, RoutedEventArgs e)
+        {
+            _androidProjectTemplateManager.Reset();
         }
     }
 }

@@ -64,5 +64,34 @@ namespace Xamaridea.Core.Extensions
             FileAttributes attr = File.GetAttributes(path);
             return (attr & FileAttributes.Directory) == FileAttributes.Directory;
         }
+
+        public static void DirectoryCopy(string sourceDirName, string destDirName)
+        {
+            var dir = new DirectoryInfo(sourceDirName);
+            var dirs = dir.GetDirectories();
+
+            if (!dir.Exists)
+            {
+                throw new DirectoryNotFoundException("Source directory does not exist or could not be found: " + sourceDirName);
+            }
+
+            if (!Directory.Exists(destDirName))
+            {
+                Directory.CreateDirectory(destDirName);
+            }
+
+            var files = dir.GetFiles();
+            foreach (var file in files)
+            {
+                string temppath = Path.Combine(destDirName, file.Name);
+                file.CopyTo(temppath, false);
+            }
+
+            foreach (var subdir in dirs)
+            {
+                string temppath = Path.Combine(destDirName, subdir.Name);
+                DirectoryCopy(subdir.FullName, temppath);
+            }
+        }
     }
 }

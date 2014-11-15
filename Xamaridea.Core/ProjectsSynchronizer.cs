@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.IO.Compression;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Xamaridea.Core.Exceptions;
@@ -13,14 +11,12 @@ namespace Xamaridea.Core
 {
     public class ProjectsSynchronizer
     {
+        private readonly AndroidProjectTemplateManager _androidProjectTemplateManager = new AndroidProjectTemplateManager();
         private readonly string _xamarinProjectPath;
         private readonly string _projectName;
         private readonly string _anideExePath;
         private bool _grantedPermissionsToChangeMainProject = false;
 
-        public const string AndroidTemplateProjectResourceName = "Xamaridea.Core.AndroidProjectTemplate.zip";
-        public const string AppDataFolderName = "Xamaridea";
-        public const string XamarinResourcesFolderVariable = "%XAMARIN_RESOURCES_FOLDER%";
         public const string ResFolderName = "Resources";
 
         /// <param name="xamarinProjectPath">Path to root Android xamarin project </param>
@@ -34,45 +30,18 @@ namespace Xamaridea.Core
             _xamarinProjectPath = Path.GetDirectoryName(xamarinProjectPath);
             _projectName = Path.GetFileNameWithoutExtension(xamarinProjectPath);
             _anideExePath = anideExePath;
+            _androidProjectTemplateManager.ExtractTemplateIfNotExtracted();
         }
 
         public void Sync(string selectedFile = "")
         {
-            using (var embeddedStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(AndroidTemplateProjectResourceName))
-            {
-                if (embeddedStream == null)
-                    throw new InvalidOperationException(AndroidTemplateProjectResourceName + " was not found");
-
-                var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                var projectName = Path.GetFileName(_xamarinProjectPath);
-                
-                if (projectName == null) 
-                    throw new ArgumentNullException("projectName");
-
-                //let's generate new project each time the plugin is calledm (to avoid file locking)
-                //TODO: clean up
-                var ideaProjectDir = Path.Combine(appDataFolder, AppDataFolderName, Guid.NewGuid().ToString("N"), projectName); 
-                
-                using (var archive = new ZipArchive(embeddedStream, ZipArchiveMode.Read))
-                {
-                    archive.ExtractToDirectory(ideaProjectDir);
-                }
-                
-                var gradleConfig = Path.Combine(ideaProjectDir, @"app\build.gradle");
-                var configContent = File.ReadAllText(gradleConfig);
-                configContent = configContent
-                    .Replace(XamarinResourcesFolderVariable, Path.Combine(_xamarinProjectPath, ResFolderName) //gradle is awesome, it allows us to specify any folder as resource container
-                    .Replace(@"\", "/")); //change backslashes to common ones
-
-                File.WriteAllText(gradleConfig, configContent);
-
-                string arguments = String.Format("\"{0}\"", ideaProjectDir);
-                //if (!string.IsNullOrEmpty(selectedFile))
-                //{
-                //    arguments += string.Format(" --line 1 \"{0}\"", selectedFile);
-                //}
-                Process.Start(_anideExePath, arguments); //TODO: specify exact file
-            }
+            var ideaProjectDir = _androidProjectTemplateManager.CreateProjectFromTemplate(Path.Combine(_xamarinProjectPath, ResFolderName));
+            string arguments = String.Format("\"{0}\"", ideaProjectDir);
+            //if (!string.IsNullOrEmpty(selectedFile))
+            //{
+            //    arguments += string.Format(" --line 1 \"{0}\"", selectedFile);
+            //}
+            Process.Start(_anideExePath, arguments); //TODO: specify exact file
         }
 
         /// <summary>
