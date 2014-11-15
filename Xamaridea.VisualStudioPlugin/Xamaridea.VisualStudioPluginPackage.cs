@@ -147,13 +147,13 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
             try
             {
                 var envDte = GetService(typeof(DTE)) as DTE;
-                var selectedItems = envDte.SelectedItems.OfType<SelectedItem>().ToArray();
-                var project = selectedItems[0].ProjectItem.ContainingProject; //it should have at least one item
+                var projectItem = envDte.SelectedItems.OfType<SelectedItem>().First().ProjectItem;
+                var project = projectItem.ContainingProject; //it should have at least one item
                 var fileName = project.FileName;
 
                 var synchronizer = new ProjectsSynchronizer(fileName, Settings.Default.AnidePath);
                 await synchronizer.MakeResourcesSubdirectoriesAndFilesLowercase(async () => AskPermissionToChangeCsProj());
-                synchronizer.Sync();
+                synchronizer.Sync(projectItem.FileCount > 0 ? projectItem.FileNames[0] : string.Empty);
                 project.Save();
             }
             catch (OperationCanceledException)

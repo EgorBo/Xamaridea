@@ -36,7 +36,7 @@ namespace Xamaridea.Core
             _anideExePath = anideExePath;
         }
 
-        public void Sync()
+        public void Sync(string selectedFile = "")
         {
             using (var embeddedStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(AndroidTemplateProjectResourceName))
             {
@@ -66,7 +66,12 @@ namespace Xamaridea.Core
 
                 File.WriteAllText(gradleConfig, configContent);
 
-                Process.Start(_anideExePath, String.Format("\"{0}\"", ideaProjectDir));
+                string arguments = String.Format("\"{0}\"", ideaProjectDir);
+                //if (!string.IsNullOrEmpty(selectedFile))
+                //{
+                //    arguments += string.Format(" --line 1 \"{0}\"", selectedFile);
+                //}
+                Process.Start(_anideExePath, arguments); //TODO: specify exact file
             }
         }
 
