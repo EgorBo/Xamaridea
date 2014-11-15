@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AndroidIdeDetector.cs" />
     <Compile Include="Exceptions\CsprojEditFailedException.cs" />
     <Compile Include="Extensions\FileExtensions.cs" />
     <Compile Include="Exceptions\FileRenameToLowercaseException.cs" />

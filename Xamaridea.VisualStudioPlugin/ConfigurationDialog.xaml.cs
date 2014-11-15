@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Documents;
 using Microsoft.VisualStudio.PlatformUI;
+using Xamaridea.Core;
 
 namespace EgorBo.Xamaridea_VisualStudioPlugin
 {
@@ -17,8 +18,6 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
 
         public ConfigurationDialog()
         {
-            this.HasMaximizeButton = true;
-            this.HasMinimizeButton = true;
             InitializeComponent();
             Loaded += OnLoaded;
         }
@@ -26,6 +25,16 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
             BrowseTextBox.Text = Settings.Default.AnidePath;
+            if (string.IsNullOrWhiteSpace(BrowseTextBox.Text))
+            {
+                var ideaPath = AndroidIdeDetector.TryFindIdeaPath();
+                if (!string.IsNullOrEmpty(ideaPath))
+                {
+                    BrowseTextBox.Text = ideaPath;
+                    Settings.Default.AnidePath = BrowseTextBox.Text;
+                }
+            }
+            UpdateOkButtonState();
         }
         
         private void BrowseButton_OnClick(object sender, RoutedEventArgs e)
@@ -36,13 +45,24 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
             {
                 string filename = dlg.FileName;
                 BrowseTextBox.Text = filename;
-                Settings.Default.AnidePath = BrowseTextBox.Text;
+                UpdateOkButtonState();
             }
         }
 
         private void Hyperlink_OnClick(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start(((Hyperlink) sender).NavigateUri.ToString());
+        }
+
+        private void OkButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.AnidePath = BrowseTextBox.Text;
+            Close();
+        }
+
+        private void UpdateOkButtonState()
+        {
+            OkButton.IsEnabled = !string.IsNullOrEmpty(BrowseTextBox.Text);
         }
     }
 }
