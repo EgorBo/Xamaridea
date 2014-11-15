@@ -1,0 +1,26 @@
+﻿<platformUi:DialogWindow x:Class="EgorBo.Xamaridea_VisualStudioPlugin.ConfigurationDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:platformUi="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.12.0"
+             mc:Ignorable="d" 
+             Height="152" Width="500">
+    <Grid Margin="0,0,10,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="80"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.ColumnSpan="2" TextWrapping="Wrap" Margin="10">
+            <Run Text="Please, specify a path to your Android Native IDE "/><Run Text="exe file" FontWeight="Bold"/><Run Text=" (IDEA, Android Studio or any other that supports gradle and can open projects by command line). If you don't have one installed, I'd recommend you to download the latest Android Studio from " /><Hyperlink NavigateUri="https://developer.android.com/sdk/installing/studio.html" Click="Hyperlink_OnClick">
+                <TextBlock Text="https://developer.android.com/sdk/installing/studio.html"/>
+            </Hyperlink>
+        </TextBlock>
+        <TextBox x:Name="BrowseTextBox" IsReadOnly="True" Grid.Row="1" Margin="10,0,0,0" />
+        <Button x:Name="BrowseButton" Click="BrowseButton_OnClick" Content="Browse" Grid.Row="1" Grid.Column="1"/>
+    </Grid>
+</platformUi:DialogWindow>
