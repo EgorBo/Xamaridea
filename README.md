@@ -1,7 +1,7 @@
 Xamaridea
 =========
 
-Visual Studio extension, allows editing *.axml files in **IntelliJ IDEA** or **Android Studio** (Xamarin.Android). It creates a fake android project and uses resources from your Xamarin.Android project by link so every change made in Android IDE will be saved.
+Visual Studio extension, allows editing .axml files in **IntelliJ IDEA** or **Android Studio** (Xamarin.Android). It creates a fake android project and uses resources from your Xamarin.Android project by link so every change made in Android IDE will be saved.
 
 Tired?
 
