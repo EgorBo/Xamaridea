@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="c3535449-011a-480d-b116-f2be70bf4d15" Version="0.2" Language="en-US" Publisher="EgorBo" />
+        <Identity Id="c3535449-011a-480d-b116-f2be70bf4d15" Version="0.4" Language="en-US" Publisher="EgorBo" />
         <DisplayName>XamarIDEA</DisplayName>
         <Description xml:space="preserve">Visual Studio extension, allows editing .axml files (Xamarin.Android) in IntelliJ IDEA or Android Studio. It creates a fake android project and uses resources from your Xamarin.Android project by link so every change made in Android IDE will be saved.</Description>
         <MoreInfo>https://github.com/EgorBo/Xamaridea</MoreInfo>
         <License>LICENSE.txt</License>
+        <ReleaseNotes >fix for https://github.com/EgorBo/Xamaridea/issues/1</ReleaseNotes>
         <Icon>icon.png</Icon>
         <PreviewImage>preview.png</PreviewImage>
         <Tags>Xamarin.Android, Android Studio, IDEA, AXML</Tags>

@@ -11,7 +11,7 @@ namespace Xamaridea.Core
     {
         public const string AndroidTemplateProjectResourceName = "Xamaridea.Core.AndroidProjectTemplate.zip";
         public const string AppDataFolderName = "Xamaridea";
-        public const string TemplateFolderName = "Template_v.0.2";
+        public const string TemplateFolderName = "Template_v.0.4";
         public const string ProjectsFolderName = "Projects";
         public const string XamarinResourcesFolderVariable = "%XAMARIN_RESOURCES_FOLDER%";
 

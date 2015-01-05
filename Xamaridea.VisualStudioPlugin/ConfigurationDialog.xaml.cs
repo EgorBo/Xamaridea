@@ -30,7 +30,7 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
             BrowseTextBox.Text = Settings.Default.AnidePath;
             if (string.IsNullOrWhiteSpace(BrowseTextBox.Text))
             {
-                var ideaPath = AndroidIdeDetector.TryFindIdeaPath();
+                var ideaPath = AndroidIdeDetector.TryFindIdePath();
                 if (!string.IsNullOrEmpty(ideaPath))
                 {
                     BrowseTextBox.Text = ideaPath;
