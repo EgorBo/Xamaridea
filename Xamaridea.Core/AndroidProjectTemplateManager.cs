@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Reflection;
+using System.Threading.Tasks;
 using Xamaridea.Core.Extensions;
 
 namespace Xamaridea.Core
@@ -11,7 +12,7 @@ namespace Xamaridea.Core
     {
         public const string AndroidTemplateProjectResourceName = "Xamaridea.Core.AndroidProjectTemplate.zip";
         public const string AppDataFolderName = "Xamaridea";
-        public const string TemplateFolderName = "Template_v.0.4";
+        public const string TemplateFolderName = "Template_v.0.7";
         public const string ProjectsFolderName = "Projects";
         public const string XamarinResourcesFolderVariable = "%XAMARIN_RESOURCES_FOLDER%";
 
@@ -42,7 +43,6 @@ namespace Xamaridea.Core
             string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var tempNewProjectDir = Path.Combine(appData, AppDataFolderName, ProjectsFolderName, Guid.NewGuid().ToString("N"));
             FileExtensions.DirectoryCopy(TemplateDirectory, tempNewProjectDir);
-
             var gradleConfig = Path.Combine(tempNewProjectDir, @"app\build.gradle");
             var configContent = File.ReadAllText(gradleConfig);
             configContent = configContent

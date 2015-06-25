@@ -37,6 +37,10 @@ namespace Xamaridea.Core.Extensions
 
             var parentDir = Path.GetDirectoryName(path);
             var dirName = Path.GetFileName(path);
+            
+            if (dirName == dirName.ToLower())
+                return; //it's already in lowercase
+
             var pathToLowercaseDir = Path.Combine(parentDir, dirName.ToLower());
             var tempPath = path + "_temp"; //since NTFS is case insensitive
 
