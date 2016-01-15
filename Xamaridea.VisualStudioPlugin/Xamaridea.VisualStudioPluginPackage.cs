@@ -153,6 +153,7 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
 
                 var synchronizer = new ProjectsSynchronizer(fileName, Settings.Default.AnidePath);
                 await synchronizer.MakeResourcesSubdirectoriesAndFilesLowercase(async () => AskPermissionToChangeCsProj());
+                ShowSuggestions();
                 synchronizer.Sync(projectItem.FileCount > 0 ? projectItem.FileNames[0] : string.Empty);
                 project.Save();
             }
@@ -185,6 +186,22 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
                        OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST,
                        OLEMSGICON.OLEMSGICON_QUERY, 0, out result));
             return result == 6; //TODO: find defined constant
+        }
+
+        private void ShowSuggestions()
+        {
+            if (!Settings.Default.ShowSuggestions)
+                return;
+            Settings.Default.ShowSuggestions = false;
+            var uiShell = (IVsUIShell)GetService(typeof(SVsUIShell));
+            Guid clsid = Guid.Empty;
+            int result;
+            ErrorHandler.ThrowOnFailure(uiShell.ShowMessageBox(
+                       0, ref clsid, "Xamaridea", "Try to build the Android project first in the selected IDE and all Xamarin project resources will appear. Also, you can edit Android template (especially gradle.build) via 'Tools\\Xamaridea plugin config' in VS",
+                       string.Empty, 0, OLEMSGBUTTON.OLEMSGBUTTON_OK,
+                       OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST,
+                       OLEMSGICON.OLEMSGICON_INFO, 0, out result));
+
         }
         
         private void ShowErrorDuringSync(string errorFormat, params object[] args)
