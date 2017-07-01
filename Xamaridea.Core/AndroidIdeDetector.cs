@@ -10,7 +10,18 @@ namespace Xamaridea.Core
         {
             try
             {
-                const string androidStudioPath = @"C:\Program Files\Android\Android Studio\bin\studio64.exe";
+                var progFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles).Replace("(x86)", "").TrimEnd();
+                var progFilesX86 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+
+                string[] androidStudioPaths = new string[] 
+                    {
+                        Path.Combine(progFiles, @"Android\Android Studio\bin\studio64.exe"),
+                        Path.Combine(progFiles, @"Android\Android Studio\bin\studio.exe"),
+                        Path.Combine(progFilesX86, @"Android\Android Studio\bin\studio.exe"),
+                        Path.Combine(progFilesX86, @"Android\Android Studio\bin\studio64.exe"),
+                    };
+
+                var androidStudioPath = androidStudioPaths.FirstOrDefault(p => File.Exists(p));
                 if (File.Exists(androidStudioPath))
                     return androidStudioPath;
 

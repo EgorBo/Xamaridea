@@ -1,4 +1,5 @@
-﻿using Xamaridea.Core;
+﻿using System;
+using Xamaridea.Core;
 
 namespace Xamaridea.Console
 {

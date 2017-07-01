@@ -17,7 +17,7 @@
             <ColumnDefinition Width="80"/>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.ColumnSpan="2" TextWrapping="Wrap" Margin="10">
-            <Run Text="Please, specify a path to your Android Native IDE "/><Run Text="exe file" FontWeight="Bold"/><Run Text=" (IDEA, Android Studio or any other that supports gradle and can open projects by command line). If you don't have one installed, I'd recommend you to download the latest Android Studio from " /><Hyperlink NavigateUri="https://developer.android.com/sdk/installing/studio.html" Click="Hyperlink_OnClick">
+            <Run Text="Android Studio full path "/><Run Text="(.exe)" FontWeight="Bold"/><Run Text=". You can download the latest version of Android Studio from " /><Hyperlink NavigateUri="https://developer.android.com/sdk/installing/studio.html" Click="Hyperlink_OnClick">
                 <TextBlock Text="https://developer.android.com/sdk/installing/studio.html"/>
             </Hyperlink>
         </TextBlock>
