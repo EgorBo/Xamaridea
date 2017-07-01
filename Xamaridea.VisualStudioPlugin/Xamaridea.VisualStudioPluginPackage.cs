@@ -181,7 +181,7 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
             int result;
             ErrorHandler.ThrowOnFailure(uiShell.ShowMessageBox(
                        0, ref clsid, "Xamaridea",
-                       "Android project requires your files and directories under 'Resources' folder to be in lowercase and have extension \".xml\" instead of \".axml\" - can Xamaridea automaticaly change them in your project? (possibly you will need to fix in code cases like Resources.Layout.Main to Resources.Layout.main).",
+                       "Android project requires your files and directories under 'Resources' folder to be in lowercase and have extension \".xml\" instead of \".axml\" - Xamaridea will automaticaly change them in your project. (possibly you will need to fix in code cases like Resources.Layout.Main to Resources.Layout.main).",
                        string.Empty, 0, OLEMSGBUTTON.OLEMSGBUTTON_YESNO,
                        OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST,
                        OLEMSGICON.OLEMSGICON_QUERY, 0, out result));
@@ -197,7 +197,7 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
             Guid clsid = Guid.Empty;
             int result;
             ErrorHandler.ThrowOnFailure(uiShell.ShowMessageBox(
-                       0, ref clsid, "Xamaridea", "Try to build the Android project first in the selected IDE and all Xamarin project resources will appear. Also, you can edit Android template (especially gradle.build) via 'Tools\\Xamaridea plugin config' in VS",
+                       0, ref clsid, "Xamaridea", "IMPORTANT!!! \nTry to build the generated project first in the Android Studio IDE and all Xamarin project resources will appear. Also, you can edit Android template (especially gradle.build) via 'Tools\\Xamaridea plugin config' in VS",
                        string.Empty, 0, OLEMSGBUTTON.OLEMSGBUTTON_OK,
                        OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST,
                        OLEMSGICON.OLEMSGICON_INFO, 0, out result));
