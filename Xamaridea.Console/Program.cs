@@ -14,7 +14,7 @@ namespace Xamaridea.Console
         {
             //Just for test without integration to VS:
             string androidStudio = @"C:\Program Files\Android\Android Studio\bin\studio64.exe";
-            string testXamarinProject = @"C:\Users\Ghalani 1\Documents\Projects\MESTKitchen\MESTKitchenDroid\MESTKitchenDroid.csproj";
+            string testXamarinProject = @"Projects\_[______________\KinderChat\Android\KinderChat.Android.csproj";
 
             var projectsSynchronizer = new ProjectsSynchronizer(testXamarinProject, androidStudio);
             await projectsSynchronizer.MakeResourcesSubdirectoriesAndFilesLowercase(async () =>
