@@ -6,7 +6,7 @@ namespace Xamaridea.Core.Exceptions
     {
         public string FileName { get; set; }
 
-        public FileRenameToLowercaseException(string fileName, Exception actualException) 
+        public FileRenameToLowercaseException(string fileName, Exception actualException)
             : base("Unable to rename " + fileName + " to lowercase", actualException)
         {
             FileName = fileName;

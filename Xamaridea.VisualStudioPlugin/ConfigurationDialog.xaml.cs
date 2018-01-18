@@ -1,6 +1,6 @@
-﻿using System.Windows;
+﻿using Microsoft.VisualStudio.PlatformUI;
+using System.Windows;
 using System.Windows.Documents;
-using Microsoft.VisualStudio.PlatformUI;
 using Xamaridea.Core;
 
 namespace EgorBo.Xamaridea_VisualStudioPlugin
@@ -39,9 +39,9 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
             }
             UpdateOkButtonState();
         }
-        
+
         private void BrowseButton_OnClick(object sender, RoutedEventArgs e)
-        {    
+        {
             var dlg = new Microsoft.Win32.OpenFileDialog { DefaultExt = ".exe", Filter = "Exe Files (*.exe)|*.exe" };
             bool? result = dlg.ShowDialog();
             if (result == true)
@@ -54,7 +54,7 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
 
         private void Hyperlink_OnClick(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start(((Hyperlink) sender).NavigateUri.ToString());
+            System.Diagnostics.Process.Start(((Hyperlink)sender).NavigateUri.ToString());
         }
 
         private void OkButton_OnClick(object sender, RoutedEventArgs e)

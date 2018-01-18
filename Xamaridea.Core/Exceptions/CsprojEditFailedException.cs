@@ -6,7 +6,7 @@ namespace Xamaridea.Core.Exceptions
     {
         public string Csproj { get; set; }
 
-        public CsprojEditFailedException(string csproj, Exception actualException) 
+        public CsprojEditFailedException(string csproj, Exception actualException)
             : base("Unable to modify " + csproj, actualException)
         {
             Csproj = csproj;

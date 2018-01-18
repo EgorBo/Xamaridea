@@ -1,18 +1,15 @@
-﻿using System;
+﻿using EnvDTE;
+using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.ComponentModel.Design;
-using System.Threading.Tasks;
-using EnvDTE;
-using Microsoft.Win32;
-using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.OLE.Interop;
-using Microsoft.VisualStudio.Shell;
 using Xamaridea.Core;
 using Xamaridea.Core.Exceptions;
 
@@ -24,8 +21,8 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
     /// The minimum requirement for a class to be considered a valid package for Visual Studio
     /// is to implement the IVsPackage interface and register itself with the shell.
     /// This package uses the helper classes defined inside the Managed Package Framework (MPF)
-    /// to do it: it derives from the Package class that provides the implementation of the 
-    /// IVsPackage interface and uses the registration attributes defined in the framework to 
+    /// to do it: it derives from the Package class that provides the implementation of the
+    /// IVsPackage interface and uses the registration attributes defined in the framework to
     /// register itself and its components with the shell.
     /// </summary>
     // This attribute tells the PkgDef creation utility (CreatePkgDef.exe) that this class is
@@ -42,9 +39,9 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
 
         /// <summary>
         /// Default constructor of the package.
-        /// Inside this method you can place any initialization code that does not require 
-        /// any Visual Studio service because at this point the package object is created but 
-        /// not sited yet inside Visual Studio environment. The place to do all the other 
+        /// Inside this method you can place any initialization code that does not require
+        /// any Visual Studio service because at this point the package object is created but
+        /// not sited yet inside Visual Studio environment. The place to do all the other
         /// initialization is the Initialize method.
         /// </summary>
         public Xamaridea_VisualStudioPluginPackage()
@@ -54,6 +51,7 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
 
         /////////////////////////////////////////////////////////////////////////////
         // Overridden Package Implementation
+
         #region Package Members
 
         /// <summary>
@@ -62,11 +60,11 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
         /// </summary>
         protected override void Initialize()
         {
-            Debug.WriteLine (string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
+            Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
             base.Initialize();
 
             var mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
-            if ( null != mcs )
+            if (null != mcs)
             {
                 var menuCommandId = new CommandID(GuidList.guidXamaridea_VisualStudioPluginCmdSet, (int)PkgCmdIDList.cmdidOpenInIdeaCommand);
                 var menuItem = new OleMenuCommand(MenuItemCallback, menuCommandId);
@@ -86,8 +84,8 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
             dlg.ShowModal();
         }
 
-        #endregion
-        
+        #endregion Package Members
+
         private void MenuItem_OnBeforeQueryStatus(object sender, EventArgs e)
         {
             bool enable = false;
@@ -123,6 +121,7 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
             }
             menu.Visible = enable;
         }
+
         private static bool DoesContain(string item, IEnumerable<string> strings)
         {
             return strings.Any(s => string.Equals(item, s, StringComparison.InvariantCultureIgnoreCase));
@@ -201,15 +200,14 @@ namespace EgorBo.Xamaridea_VisualStudioPlugin
                        string.Empty, 0, OLEMSGBUTTON.OLEMSGBUTTON_OK,
                        OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST,
                        OLEMSGICON.OLEMSGICON_INFO, 0, out result));
-
         }
-        
+
         private void ShowErrorDuringSync(string errorFormat, params object[] args)
         {
             var uiShell = (IVsUIShell)GetService(typeof(SVsUIShell));
             Guid clsid = Guid.Empty;
             int result;
-            ErrorHandler.ThrowOnFailure(uiShell.ShowMessageBox(0, ref clsid, "Xamaridea", string.Format(errorFormat, args), string.Empty, 0, 
+            ErrorHandler.ThrowOnFailure(uiShell.ShowMessageBox(0, ref clsid, "Xamaridea", string.Format(errorFormat, args), string.Empty, 0,
                 OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST, OLEMSGICON.OLEMSGICON_CRITICAL, 0, out result));
         }
     }
