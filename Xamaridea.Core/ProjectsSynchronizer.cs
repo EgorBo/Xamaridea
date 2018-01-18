@@ -35,12 +35,8 @@ namespace Xamaridea.Core
 
         public void Sync(string selectedFile = "")
         {
-            var ideaProjectDir = _androidProjectTemplateManager.CreateProjectFromTemplate(Path.Combine(_xamarinProjectPath, ResFolderName));
+            var ideaProjectDir = _androidProjectTemplateManager.CreateProjectFromTemplate(Path.Combine(_xamarinProjectPath, ResFolderName), _xamarinProjectPath);
             string arguments = String.Format("\"{0}\"", ideaProjectDir);
-            //if (!string.IsNullOrEmpty(selectedFile))
-            //{
-            //    arguments += string.Format(" --line 1 \"{0}\"", selectedFile);
-            //}
             Process.Start(_anideExePath, arguments); //TODO: specify exact file
         }
 

@@ -4,7 +4,7 @@ using System;
 
 namespace EgorBo.Xamaridea_VisualStudioPlugin
 {
-    static class GuidList
+    internal static class GuidList
     {
         public const string guidXamaridea_VisualStudioPluginPkgString = "c3535449-011a-480d-b116-f2be70bf4d15";
         public const string guidXamaridea_VisualStudioPluginCmdSetString = "e4c7825f-a380-451a-94d8-9212bd49099d";

@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Reflection;
-using System.Threading.Tasks;
 using Xamaridea.Core.Extensions;
 
 namespace Xamaridea.Core
@@ -38,10 +37,11 @@ namespace Xamaridea.Core
             Process.Start("explorer.exe", TemplateDirectory);
         }
 
-        public string CreateProjectFromTemplate(string xamarinResourcesDir)
+        public string CreateProjectFromTemplate(string xamarinResourcesDir, string xamarinProjectPath)
         {
             string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var tempNewProjectDir = Path.Combine(appData, AppDataFolderName, ProjectsFolderName, Guid.NewGuid().ToString("N"));
+            var projectName = ExtractProjectName(xamarinProjectPath);
+            var tempNewProjectDir = Path.Combine(appData, AppDataFolderName, ProjectsFolderName, projectName);
             FileExtensions.DirectoryCopy(TemplateDirectory, tempNewProjectDir);
             var gradleConfig = Path.Combine(tempNewProjectDir, @"app\build.gradle");
             var configContent = File.ReadAllText(gradleConfig);
@@ -51,6 +51,12 @@ namespace Xamaridea.Core
 
             File.WriteAllText(gradleConfig, configContent);
             return tempNewProjectDir;
+        }
+
+        private string ExtractProjectName(string xamarinProjectPath)
+        {
+            var startIndex = xamarinProjectPath.LastIndexOf('\\') + 1;
+            return xamarinProjectPath.Substring(startIndex, xamarinProjectPath.Length - startIndex);
         }
 
         private string TemplateDirectory

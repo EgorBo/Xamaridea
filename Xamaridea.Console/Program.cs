@@ -1,11 +1,10 @@
-﻿using System;
-using Xamaridea.Core;
+﻿using Xamaridea.Core;
 
 namespace Xamaridea.Console
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             TestAsync();
             System.Console.ReadKey();
@@ -20,7 +19,7 @@ namespace Xamaridea.Console
             var projectsSynchronizer = new ProjectsSynchronizer(testXamarinProject, androidStudio);
             await projectsSynchronizer.MakeResourcesSubdirectoriesAndFilesLowercase(async () =>
                 {
-                    System.Console.WriteLine("Permissions to change original projec has been requested. Granted.");
+                    System.Console.WriteLine("Permissions to change original project has been requested. Granted.");
                     return true;
                 });
             projectsSynchronizer.Sync();

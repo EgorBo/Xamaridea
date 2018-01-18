@@ -37,7 +37,7 @@ namespace Xamaridea.Core.Extensions
 
             var parentDir = Path.GetDirectoryName(path);
             var dirName = Path.GetFileName(path);
-            
+
             if (dirName == dirName.ToLower())
                 return; //it's already in lowercase
 
